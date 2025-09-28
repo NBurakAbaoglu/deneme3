@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<title>Etkinlik Oluştur</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --primary-color: #5d67e8;
+        --primary-light: #8b92ff;
+        --secondary-color: #3b4557;
+        --bg-light: #f7f9fc;
+        --text-color: #333;
+        --border-color: #e0e6ef;
+        --success-color: #28a745;
+        --error-color: #dc3545;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--bg-light);
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+    }
+
+    .top-home-button {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        padding: 12px 24px;
+        background-color: var(--secondary-color);
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .top-home-button:hover {
+        background-color: #2c3445;
+        transform: translateY(-2px);
+    }
+
+    .main-container {
+        max-width: 1400px;
+        margin: 20px auto 40px auto;
+        padding: 40px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-section {
+        display: flex;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: flex-start;
+    }
+
+    .form-container {
+        flex: 1;
+        min-width: 400px;
+        background: #fff;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        border: 2px solid var(--border-color);
+    }
+
+    .table-container {
+        flex: 1;
+        min-width: 300px;
+        background: #fff;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        border: 2px solid var(--border-color);
+    }
+
+    h2, h3 {
+        color: var(--secondary-color);
+        margin-bottom: 25px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+    }
+
+    .form-title {
+        background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin: -30px -30px 25px -30px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    label {
+        display: block;
+        margin-top: 20px;
+        font-weight: 500;
+        color: var(--secondary-color);
+        font-size: 16px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px 15px;
+        margin-top: 8px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 15px;
+        background: #fdfdfe;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus, select:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(93, 103, 232, 0.1);
+    }
+
+    button[type="submit"] {
+        margin-top: 30px;
+        padding: 14px 0;
+        width: 100%;
+        background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(93, 103, 232, 0.4);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button[type="submit"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(93, 103, 232, 0.5);
+    }
+
+    .error {
+        color: var(--error-color);
+        margin-top: 15px;
+        font-size: 14px;
+        min-height: 20px;
+        font-weight: 500;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: #fff;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    th, td {
+        border: none;
+        padding: 15px 10px;
+        text-align: center;
+        font-size: 15px;
+        color: var(--text-color);
+    }
+
+    th {
+        background: var(--primary-color);
+        color: #fff;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) td {
+        background: #fbfcfe;
+    }
+
+    tr:hover td {
+        background-color: #f0f4f8;
+        transition: background-color 0.2s;
+    }
+
+    .gözetmen-section {
+        display: none;
+    }
+
+    .gözetmen-section.show {
+        display: block;
+    }
+
+    /* Horizontal Timeline Styles */
+    .timeline-section {
+        margin-top: 60px;
+        padding-top: 40px;
+        border-top: 3px solid var(--primary-color);
+    }
+
+    .timeline-title {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 30px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .horizontal-timeline {
+        position: relative;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 40px 20px;
+        overflow-x: auto;
+    }
+
+    .timeline-line {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+        transform: translateY(-50%);
+        z-index: 1;
+    }
+
+    .timeline-items {
+        display: flex;
+        gap: 40px;
+        padding: 20px 0;
+        min-width: max-content;
+    }
+
+    .timeline-item {
+        position: relative;
+        background: white;
+        border: 3px solid var(--primary-color);
+        border-radius: 15px;
+        padding: 20px;
+        min-width: 250px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        z-index: 2;
+    }
+
+    .timeline-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -20px;
+        width: 15px;
+        height: 15px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        transform: translateY(-50%);
+        z-index: 3;
+    }
+
+    .timeline-item::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -20px;
+        width: 15px;
+        height: 15px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        transform: translateY(-50%);
+        z-index: 3;
+    }
+
+    .timeline-date {
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    .timeline-title-item {
+        font-weight: 600;
+        color: var(--secondary-color);
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .timeline-details {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.4;
+    }
+
+    .timeline-details div {
+        margin-bottom: 5px;
+    }
+
+    .timeline-details i {
+        margin-right: 8px;
+        color: var(--primary-color);
+    }
+
+    @media (max-width: 1200px) {
+        .form-section {
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-container, .table-container {
+            min-width: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 20px;
+        }
+        
+        .timeline-items {
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .timeline-line {
+            display: none;
+        }
+        
+        .timeline-item::before,
+        .timeline-item::after {
+            display: none;
+        }
+    }
+</style>
+</head>
+<body>
+
+<a href="home.html" class="top-home-button">Anasayfaya Dön</a>
+
+<div class="main-container">
+    
+    <!-- TEMEL BECERİ FORMU -->
+    <div class="form-section">
+        <div class="form-container">
+            <div class="form-title">
+                <i class="fas fa-graduation-cap"></i> Temel Beceri Formu
+            </div>
+            <form id="temelBeceriForm">
+                <label for="temelCokluBeceri">Çoklu Beceri Seç:</label>
+                <select id="temelCokluBeceri" name="temelCokluBeceri" required>
+                    <option value="">-- Çoklu Beceri Seçiniz --</option>
+                </select>
+
+                <label for="temelBeceri">Temel Beceri Seç:</label>
+                <select id="temelBeceri" name="temelBeceri" required>
+                    <option value="">-- Temel Beceri Seçiniz --</option>
+                </select>
+
+                <label for="temelEgitmen">Eğitmen Seç:</label>
+                <select id="temelEgitmen" name="temelEgitmen" required>
+                    <option value="">-- Eğitmen Seçiniz --</option>
+                </select>
+
+                <label for="temelBaslangic">Etkinlik Başlangıç Tarihi:</label>
+                <input type="date" id="temelBaslangic" name="temelBaslangic" required />
+
+                <label for="temelBitis">Etkinlik Bitiş Tarihi:</label>
+                <input type="date" id="temelBitis" name="temelBitis" required />
+
+                <label for="temelKontenjan">Kontenjan:</label>
+                <input type="number" id="temelKontenjan" name="temelKontenjan" min="1" required />
+
+                <button type="submit">Kaydet</button>
+                <div id="temelError" class="error"></div>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h3>Temel Beceri Adet Tablosu</h3>
+            <table id="temelBeceriTable">
+                <thead>
+                    <tr>
+                        <th>Temel Beceri</th>
+                        <th>Adet</th>
+                    </tr>
+                </thead>
+                <tbody id="temelBeceriTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ÇOKLU BECERİ FORMU -->
+    <div class="form-section">
+        <div class="form-container">
+            <div class="form-title">
+                <i class="fas fa-layer-group"></i> Çoklu Beceri Formu
+            </div>
+            <form id="cokluBeceriForm">
+                <label for="cokluBeceri">Çoklu Beceri Seç:</label>
+                <select id="cokluBeceri" name="cokluBeceri" required>
+                    <option value="">-- Çoklu Beceri Seçiniz --</option>
+                </select>
+
+                <label for="cokluEgitmen">Eğitmen Seç:</label>
+                <select id="cokluEgitmen" name="cokluEgitmen" required>
+                    <option value="">-- Eğitmen Seçiniz --</option>
+                </select>
+
+                <label for="cokluBaslangic">Etkinlik Başlangıç Tarihi:</label>
+                <input type="date" id="cokluBaslangic" name="cokluBaslangic" required />
+
+                <label for="cokluBitis">Etkinlik Bitiş Tarihi:</label>
+                <input type="date" id="cokluBitis" name="cokluBitis" required />
+
+                <button type="submit">Oluştur</button>
+                <div id="cokluError" class="error"></div>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h3>Çoklu Beceri Adet Tablosu</h3>
+            <table id="cokluBeceriTable">
+                <thead>
+                    <tr>
+                        <th>Çoklu Beceri</th>
+                        <th>Adet</th>
+                    </tr>
+                </thead>
+                <tbody id="cokluBeceriTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- EĞİTİCİNİN EĞİTİMİ FORMU -->
+    <div class="form-section">
+        <div class="form-container">
+            <div class="form-title">
+                <i class="fas fa-chalkboard-teacher"></i> Eğiticinin Eğitimi Formu
+            </div>
+            <form id="egiticininEgitimiForm">
+                <label for="egitimCokluBeceri">Çoklu Beceri Seç:</label>
+                <select id="egitimCokluBeceri" name="egitimCokluBeceri" required>
+                    <option value="">-- Çoklu Beceri Seçiniz --</option>
+                </select>
+
+                <label for="egitimEgitmen">Eğitmen Seç:</label>
+                <select id="egitimEgitmen" name="egitimEgitmen" required>
+                    <option value="">-- Eğitmen Seçiniz --</option>
+                </select>
+
+                <div class="gözetmen-section" id="gozetmenSection" style="display: none;">
+                    <label for="gozetmen">Gözetmen Seç:</label>
+                    <select id="gozetmen" name="gozetmen">
+                        <option value="">-- Gözetmen Seçiniz --</option>
+                    </select>
+                </div>
+
+                <label for="egitimBaslangic">Etkinlik Başlangıç Tarihi:</label>
+                <input type="date" id="egitimBaslangic" name="egitimBaslangic" required />
+
+                <label for="egitimBitis">Etkinlik Bitiş Tarihi:</label>
+                <input type="date" id="egitimBitis" name="egitimBitis" required />
+
+                <label for="egitimKontenjan">Kontenjan:</label>
+                <input type="number" id="egitimKontenjan" name="egitimKontenjan" min="1" required />
+
+                <button type="submit">Oluştur</button>
+                <div id="egitimError" class="error"></div>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h3>Eğiticinin Eğitimi Tablosu</h3>
+            <table id="egiticininEgitimiTable">
+                <thead>
+                    <tr>
+                        <th>Eğiticinin Eğitimi</th>
+                        <th>Adet</th>
+                    </tr>
+                </thead>
+                <tbody id="egiticininEgitimiTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- YATAY ZAMAN ÇİZELGESİ -->
+    <div class="timeline-section">
+        <h3 class="timeline-title">
+            <i class="fas fa-calendar-alt"></i>
+            Etkinlik Zaman Çizelgesi
+        </h3>
+        <div class="horizontal-timeline">
+            <div class="timeline-line"></div>
+            <div class="timeline-items" id="timelineContainer">
+                <!-- Timeline items will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Form elementlerini al
+    const temelCokluBeceri = document.getElementById('temelCokluBeceri');
+    const temelBeceri = document.getElementById('temelBeceri');
+    const temelEgitmen = document.getElementById('temelEgitmen');
+    const cokluBeceri = document.getElementById('cokluBeceri');
+    const cokluEgitmen = document.getElementById('cokluEgitmen');
+    const egitimCokluBeceri = document.getElementById('egitimCokluBeceri');
+    const egitimEgitmen = document.getElementById('egitimEgitmen');
+    const gozetmenSection = document.getElementById('gozetmenSection');
+    const gozetmen = document.getElementById('gozetmen');
+
+    // Çoklu beceri (organizasyon) verilerini yükle
+    function loadOrganizations() {
+        fetch('event_get_organizations.php')
+            .then(res => res.json())
+            .then(data => {
+                const options = [temelCokluBeceri, cokluBeceri, egitimCokluBeceri];
+                options.forEach(select => {
+                    select.innerHTML = '<option value="">-- Çoklu Beceri Seçiniz --</option>';
+                    data.forEach(org => {
+                        const option = document.createElement('option');
+                        option.value = org.id;
+                        option.textContent = org.name;
+                        select.appendChild(option);
+                    });
+                });
+            })
+            .catch(err => {
+                console.error('Organizasyonlar yüklenemedi:', err);
+            });
+    }
+
+    // Temel beceri verilerini yükle
+    function loadTemelBeceri(orgId) {
+        if (!orgId) {
+            temelBeceri.innerHTML = '<option value="">-- Temel Beceri Seçiniz --</option>';
+            return;
+        }
+
+        fetch(`api/get_organization_skills.php?organization_id=${orgId}`)
+            .then(res => res.json())
+            .then(data => {
+                temelBeceri.innerHTML = '<option value="">-- Temel Beceri Seçiniz --</option>';
+                if (data.success && data.skills) {
+                    data.skills.forEach(skill => {
+                        const option = document.createElement('option');
+                        option.value = skill.skill_name;
+                        option.textContent = skill.skill_name;
+                        temelBeceri.appendChild(option);
+                    });
+                }
+            })
+            .catch(err => {
+                console.error('Temel beceriler yüklenemedi:', err);
+            });
+    }
+
+    // Eğitmen verilerini yükle (Temel beceri için)
+    function loadEgitmenler(orgId, skillName, targetSelect) {
+        if (!orgId && !skillName) {
+            targetSelect.innerHTML = '<option value="">-- Eğitmen Seçiniz --</option>';
+            return;
+        }
+
+        // Önce organizasyon adını al
+        const organizationSelect = document.getElementById('temelCokluBeceri');
+        const organizationName = organizationSelect.options[organizationSelect.selectedIndex]?.text;
+
+        const params = new URLSearchParams();
+        if (organizationName) params.append('organization_name', organizationName);
+        if (skillName) params.append('skill_name', skillName);
+
+        fetch('api/get_teachers_for_skill.php?' + params.toString())
+            .then(res => res.json())
+            .then(data => {
+                targetSelect.innerHTML = '<option value="">-- Eğitmen Seçiniz --</option>';
+
+                if (!data.success || !data.teachers || data.teachers.length === 0) {
+                    const option = document.createElement('option');
+                    option.textContent = 'Eğitmen bulunamadı';
+                    option.disabled = true;
+                    targetSelect.appendChild(option);
+                    return;
+                }
+
+                // Tekrar eden eğitmen isimlerini filtrele
+                const uniqueTeachers = [];
+                const seenNames = new Set();
+                
+                data.teachers.forEach(teacher => {
+                    if (!seenNames.has(teacher.person_name)) {
+                        seenNames.add(teacher.person_name);
+                        uniqueTeachers.push(teacher);
+                    }
+                });
+
+                uniqueTeachers.forEach(teacher => {
+                    const option = document.createElement('option');
+                    option.value = teacher.person_name;
+                    option.textContent = teacher.person_name;
+                    targetSelect.appendChild(option);
+                });
+            })
+            .catch(err => {
+                console.error('Eğitmenler yüklenemedi:', err);
+            });
+    }
+
+    // Başarılı eğitmenleri organizasyona göre yükle
+    function loadSuccessfulTrainersForOrganization(organizationName, targetSelect) {
+        console.log('🔍 loadSuccessfulTrainersForOrganization çağrıldı:', organizationName);
+        
+        if (!organizationName) {
+            targetSelect.innerHTML = '<option value="">-- Eğitmen Seçiniz --</option>';
+            return;
+        }
+
+        fetch('api/get_successful_trainers.php')
+            .then(res => res.json())
+            .then(data => {
+                console.log('📊 API yanıtı:', data);
+                targetSelect.innerHTML = '<option value="">-- Eğitmen Seçiniz --</option>';
+
+                if (!data.success || !data.data || data.data.length === 0) {
+                    console.log('❌ Başarılı eğitmen verisi yok');
+                    const option = document.createElement('option');
+                    option.textContent = 'Başarılı eğitmen bulunamadı';
+                    option.disabled = true;
+                    targetSelect.appendChild(option);
+                    return;
+                }
+
+                // Bu organizasyondaki başarılı eğitmenleri filtrele
+                const successfulTrainers = data.data.filter(trainer => {
+                    console.log('🔍 Trainer organizasyon:', trainer.organization_name, 'Aranan:', organizationName);
+                    return trainer.organization_name === organizationName;
+                });
+
+                console.log('✅ Filtrelenmiş başarılı eğitmenler:', successfulTrainers);
+
+                if (successfulTrainers.length === 0) {
+                    const option = document.createElement('option');
+                    option.textContent = 'Bu organizasyonda başarılı eğitmen bulunamadı';
+                    option.disabled = true;
+                    targetSelect.appendChild(option);
+                    return;
+                }
+
+                // Başarılı eğitmenleri ekle
+                successfulTrainers.forEach(trainer => {
+                    const option = document.createElement('option');
+                    option.value = trainer.person_name;
+                    option.textContent = trainer.display_text;
+                    option.dataset.isSuccessful = 'true';
+                    option.dataset.etkinlikId = trainer.etkinlik_id;
+                    targetSelect.appendChild(option);
+                });
+
+                // Normal eğitmenleri de ekle (innerHTML kullanmadan)
+                loadEgitmenlerForCokluAppend(organizationName, targetSelect);
+            })
+            .catch(err => {
+                console.error('❌ Başarılı eğitmenler yüklenemedi:', err);
+                // Hata durumunda normal eğitmenleri yükle
+                loadEgitmenlerForCoklu(organizationName, targetSelect);
+            });
+    }
+
+    // TEP teachers'ı organization_name için yükle
+    function loadTepTeachersForCokluBeceri(organizationName, targetSelect) {
+        if (!organizationName) {
+            targetSelect.innerHTML = '<option value="">-- Gözetmen Seçiniz --</option>';
+            return;
+        }
+
+        console.log('🔍 TEP teachers yükleniyor, organization_name:', organizationName);
+
+        fetch(`api/get_tep_teachers.php?organization_name=${encodeURIComponent(organizationName)}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log('📊 TEP teachers API yanıtı:', data);
+                targetSelect.innerHTML = '<option value="">-- Gözetmen Seçiniz --</option>';
+
+                if (!data.success || !data.data || data.data.length === 0) {
+                    const option = document.createElement('option');
+                    option.textContent = 'Bu organizasyonda eğitmen bulunamadı';
+                    option.disabled = true;
+                    targetSelect.appendChild(option);
+                    return;
+                }
+
+                data.data.forEach(teacher => {
+                    const option = document.createElement('option');
+                    option.value = teacher.person_name;
+                    option.textContent = teacher.display_text;
+                    targetSelect.appendChild(option);
+                });
+            })
+            .catch(err => {
+                console.error('❌ TEP teachers yüklenemedi:', err);
+                targetSelect.innerHTML = '<option value="">-- Gözetmen Seçiniz --</option>';
+            });
+    }
+
+    // Normal eğitmenleri ekle (innerHTML kullanmadan)
+    function loadEgitmenlerForCokluAppend(organizationName, targetSelect) {
+        if (!organizationName) {
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.append('organization_name', organizationName);
+
+        fetch('api/get_teachers_for_skill.php?' + params.toString())
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success || !data.teachers || data.teachers.length === 0) {
+                    return;
+                }
+
+                // Sadece yeni eğitmenleri ekle (mevcut olanları koru)
+                const existingValues = Array.from(targetSelect.options).map(option => option.value);
+                
+                data.teachers.forEach(teacher => {
+                    if (!existingValues.includes(teacher.person_name)) {
+                        const option = document.createElement('option');
+                        option.value = teacher.person_name;
+                        option.textContent = teacher.person_name;
+                        option.dataset.isSuccessful = 'false';
+                        targetSelect.appendChild(option);
+                    }
+                });
+            })
+            .catch(err => {
+                console.error('Normal eğitmenler yüklenemedi:', err);
+            });
+    }
+
+    // Eğitmen verilerini yükle (Çoklu beceri ve Eğiticinin eğitimi için)
+    function loadEgitmenlerForCoklu(organizationName, targetSelect) {
+        if (!organizationName) {
+            targetSelect.innerHTML = '<option value="">-- Eğitmen Seçiniz --</option>';
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.append('organization_name', organizationName);
+
+        fetch('api/get_teachers_for_skill.php?' + params.toString())
+            .then(res => res.json())
+            .then(data => {
+                targetSelect.innerHTML = '<option value="">-- Eğitmen Seçiniz --</option>';
+
+                if (!data.success || !data.teachers || data.teachers.length === 0) {
+                    const option = document.createElement('option');
+                    option.textContent = 'Eğitmen bulunamadı';
+                    option.disabled = true;
+                    targetSelect.appendChild(option);
+                    return;
+                }
+
+                // Tekrar eden eğitmen isimlerini filtrele
+                const uniqueTeachers = [];
+                const seenNames = new Set();
+                
+                data.teachers.forEach(teacher => {
+                    if (!seenNames.has(teacher.person_name)) {
+                        seenNames.add(teacher.person_name);
+                        uniqueTeachers.push(teacher);
+                    }
+                });
+
+                uniqueTeachers.forEach(teacher => {
+                    const option = document.createElement('option');
+                    option.value = teacher.person_name;
+                    option.textContent = teacher.person_name;
+                    targetSelect.appendChild(option);
+                });
+            })
+            .catch(err => {
+                console.error('Eğitmenler yüklenemedi:', err);
+            });
+    }
+
+    // Gözetmen dropdown'ını kontrol et (3. seviye eğitmen için)
+    function checkGozetmenVisibility(egitmenName) {
+        // Bu fonksiyon eğitmen seviyesini kontrol eder
+        // Şimdilik her zaman gizli, gerçek implementasyonda eğitmen seviyesi kontrol edilecek
+        gozetmenSection.classList.remove('show');
+    }
+
+    // Event listeners
+    temelCokluBeceri.addEventListener('change', () => {
+        loadTemelBeceri(temelCokluBeceri.value);
+        loadEgitmenler(temelCokluBeceri.value, temelBeceri.value, temelEgitmen);
+    });
+
+    temelBeceri.addEventListener('change', () => {
+        loadEgitmenler(temelCokluBeceri.value, temelBeceri.value, temelEgitmen);
+    });
+
+    cokluBeceri.addEventListener('change', () => {
+        // Çoklu beceri için organizasyon adını al
+        const organizationName = cokluBeceri.options[cokluBeceri.selectedIndex]?.text;
+        loadEgitmenlerForCoklu(organizationName, cokluEgitmen);
+    });
+
+    egitimCokluBeceri.addEventListener('change', () => {
+        // Eğiticinin eğitimi için organizasyon adını al
+        const organizationName = egitimCokluBeceri.options[egitimCokluBeceri.selectedIndex]?.text;
+        const cokluBeceriId = egitimCokluBeceri.value;
+        
+        if (cokluBeceriId) {
+            // Başarılı eğitmenleri yükle
+            loadSuccessfulTrainersForOrganization(organizationName, egitimEgitmen);
+        } else {
+            egitimEgitmen.innerHTML = '<option value="">-- Eğitmen Seçiniz --</option>';
+            document.getElementById('gozetmenSection').style.display = 'none';
+        }
+    });
+
+    egitimEgitmen.addEventListener('change', () => {
+        const selectedOption = egitimEgitmen.options[egitimEgitmen.selectedIndex];
+        const isSuccessfulTrainer = selectedOption && selectedOption.dataset.isSuccessful === 'true';
+        
+        if (isSuccessfulTrainer) {
+            // Başarılı eğitmen seçildi, gözetmen dropdown'ını göster
+            document.getElementById('gozetmenSection').style.display = 'block';
+            
+            // Çoklu beceri adını al (organization_name olarak kullanılacak)
+            const organizationName = egitimCokluBeceri.options[egitimCokluBeceri.selectedIndex]?.text;
+            console.log('🔍 Seçilen organization_name:', organizationName);
+            
+            loadTepTeachersForCokluBeceri(organizationName, document.getElementById('gozetmen'));
+        } else {
+            // Normal eğitmen seçildi, gözetmen dropdown'ını gizle
+            document.getElementById('gozetmenSection').style.display = 'none';
+        }
+    });
+
+    // Tabloları yükle
+    function loadTables() {
+        // Temel beceri tablosu
+        fetch('fetch_skills.php')
+            .then(res => res.json())
+            .then(data => {
+                const tableBody = document.getElementById('temelBeceriTableBody');
+                tableBody.innerHTML = '';
+                
+                if (Array.isArray(data)) {
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${item.skill_name}</td><td>${item.count}</td>`;
+                        tableBody.appendChild(row);
+                    });
+                }
+            })
+            .catch(err => console.error('Temel beceri tablosu yüklenemedi:', err));
+
+        // Çoklu beceri tablosu
+        fetch('fetch_organizations.php')
+            .then(res => res.json())
+            .then(data => {
+                const tableBody = document.getElementById('cokluBeceriTableBody');
+                tableBody.innerHTML = '';
+                
+                if (Array.isArray(data)) {
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${item.name}</td><td>${item.count}</td>`;
+                        tableBody.appendChild(row);
+                    });
+                }
+            })
+            .catch(err => console.error('Çoklu beceri tablosu yüklenemedi:', err));
+    }
+
+    // Form submit handlers
+    document.getElementById('temelBeceriForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData();
+        formData.append('coklu_beceri_id', temelCokluBeceri.value);
+        formData.append('temel_beceri_adi', temelBeceri.value);
+        formData.append('egitmen_adi', temelEgitmen.value);
+        formData.append('baslangic_tarihi', document.getElementById('temelBaslangic').value);
+        formData.append('bitis_tarihi', document.getElementById('temelBitis').value);
+        formData.append('kontenjan', document.getElementById('temelKontenjan').value);
+
+        fetch('api/save_temel_beceri_etkinlik.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                this.reset();
+                loadTables(); // Tabloları yenile
+            } else {
+                document.getElementById('temelError').textContent = data.message;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('temelError').textContent = "Sunucu ile bağlantı kurulamadı.";
+        });
+    });
+
+    document.getElementById('cokluBeceriForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData();
+        formData.append('coklu_beceri_id', cokluBeceri.value);
+        formData.append('egitmen_adi', cokluEgitmen.value);
+        formData.append('baslangic_tarihi', document.getElementById('cokluBaslangic').value);
+        formData.append('bitis_tarihi', document.getElementById('cokluBitis').value);
+
+        fetch('api/save_coklu_beceri_etkinlik.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                this.reset();
+                loadTables(); // Tabloları yenile
+            } else {
+                document.getElementById('cokluError').textContent = data.message;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('cokluError').textContent = "Sunucu ile bağlantı kurulamadı.";
+        });
+    });
+
+    document.getElementById('egiticininEgitimiForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData();
+        formData.append('coklu_beceri_id', egitimCokluBeceri.value);
+        formData.append('egitmen_adi', egitimEgitmen.value);
+        formData.append('gozetmen_adi', gozetmen.value);
+        formData.append('baslangic_tarihi', document.getElementById('egitimBaslangic').value);
+        formData.append('bitis_tarihi', document.getElementById('egitimBitis').value);
+        formData.append('kontenjan', document.getElementById('egitimKontenjan').value);
+
+        fetch('api/save_egiticinin_egitimi_etkinlik.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                this.reset();
+                loadTables(); // Tabloları yenile
+            } else {
+                document.getElementById('egitimError').textContent = data.message;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('egitimError').textContent = "Sunucu ile bağlantı kurulamadı.";
+        });
+    });
+
+    // Timeline yükle
+    function loadTimeline() {
+        const timelineContainer = document.getElementById('timelineContainer');
+        
+        // Tüm etkinlik türlerini yükle
+        Promise.all([
+            fetch('api/get_temel_beceri_etkinlikleri.php').then(res => res.json()),
+            fetch('api/get_coklu_beceri_etkinlikleri.php').then(res => res.json()),
+            fetch('api/get_egiticinin_egitimi_etkinlikleri.php').then(res => res.json())
+        ])
+        .then(([temelData, cokluData, egitimData]) => {
+            let allEvents = [];
+            
+            // Temel beceri etkinlikleri
+            if (temelData.success && temelData.etkinlikler) {
+                temelData.etkinlikler.forEach(etkinlik => {
+                    allEvents.push({
+                        ...etkinlik,
+                        type: 'temel',
+                        title: `Temel Beceri: ${etkinlik.temel_beceri_adi}`,
+                        color: '#5d67e8'
+                    });
+                });
+            }
+            
+            // Çoklu beceri etkinlikleri
+            if (cokluData.success && cokluData.etkinlikler) {
+                cokluData.etkinlikler.forEach(etkinlik => {
+                    allEvents.push({
+                        ...etkinlik,
+                        type: 'coklu',
+                        title: `Çoklu Beceri: ${etkinlik.organizasyon_adi}`,
+                        color: '#28a745'
+                    });
+                });
+            }
+            
+            // Eğiticinin eğitimi etkinlikleri
+            if (egitimData.success && egitimData.etkinlikler) {
+                egitimData.etkinlikler.forEach(etkinlik => {
+                    allEvents.push({
+                        ...etkinlik,
+                        type: 'egitim',
+                        title: `Eğiticinin Eğitimi: ${etkinlik.organizasyon_adi}`,
+                        color: '#ff6b6b'
+                    });
+                });
+            }
+            
+            // Tarihe göre sırala
+            allEvents.sort((a, b) => new Date(a.baslangic_tarihi) - new Date(b.baslangic_tarihi));
+            
+            if (allEvents.length === 0) {
+                timelineContainer.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px; color: #666;">
+                        <i class="fas fa-calendar-times" style="font-size: 48px; margin-bottom: 20px; color: #ddd;"></i>
+                        <h3 style="color: #999; margin-bottom: 10px;">Henüz etkinlik bulunmuyor</h3>
+                        <p style="color: #aaa;">Yeni etkinlik oluşturduğunuzda burada görünecek</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Timeline items oluştur
+            timelineContainer.innerHTML = '';
+            allEvents.forEach(etkinlik => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                timelineItem.style.borderColor = etkinlik.color;
+                
+                const startDate = new Date(etkinlik.baslangic_tarihi);
+                const endDate = new Date(etkinlik.bitis_tarihi);
+                
+                timelineItem.innerHTML = `
+                    <div class="timeline-date">${formatDate(startDate)}</div>
+                    <div class="timeline-title-item">${etkinlik.title}</div>
+                    <div class="timeline-details">
+                        <div><i class="fas fa-calendar-alt"></i> Başlangıç: ${formatDate(startDate)}</div>
+                        <div><i class="fas fa-calendar-check"></i> Bitiş: ${formatDate(endDate)}</div>
+                        <div><i class="fas fa-chalkboard-teacher"></i> Eğitmen: ${etkinlik.egitmen_adi}</div>
+                        ${etkinlik.gozetmen_adi ? `<div><i class="fas fa-user-tie"></i> Gözetmen: ${etkinlik.gozetmen_adi}</div>` : ''}
+                        ${etkinlik.kontenjan ? `<div><i class="fas fa-users"></i> Kontenjan: ${etkinlik.kontenjan}</div>` : ''}
+                    </div>
+                `;
+                
+                timelineContainer.appendChild(timelineItem);
+            });
+        })
+        .catch(err => {
+            console.error('Timeline yüklenirken hata:', err);
+            timelineContainer.innerHTML = `
+                <div style="text-align: center; padding: 60px 20px; color: #666;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px; color: #ff6b6b;"></i>
+                    <h3 style="color: #999; margin-bottom: 10px;">Timeline yüklenemedi</h3>
+                    <p style="color: #aaa;">Lütfen sayfayı yenileyin</p>
+                </div>
+            `;
+        });
+    }
+    
+    // Tarih formatla
+    function formatDate(date) {
+        return date.toLocaleDateString('tr-TR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    }
+
+    // Sayfa yüklendiğinde
+    loadOrganizations();
+    loadTables();
+    loadTimeline();
+});
+</script>
+</body>
+</html>
