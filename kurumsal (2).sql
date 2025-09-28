@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 23 Eyl 2025, 23:49:28
+-- Üretim Zamanı: 29 Eyl 2025, 00:21:37
 -- Sunucu sürümü: 10.4.32-MariaDB
 -- PHP Sürümü: 8.1.25
 
@@ -37,6 +37,13 @@ CREATE TABLE `coklu_beceri_etkinlikleri` (
   `durum` enum('aktif','tamamlandi','iptal') DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Tablo döküm verisi `coklu_beceri_etkinlikleri`
+--
+
+INSERT INTO `coklu_beceri_etkinlikleri` (`id`, `coklu_beceri_id`, `egitmen_adi`, `baslangic_tarihi`, `bitis_tarihi`, `olusturulma_tarihi`, `durum`) VALUES
+(1, 1, 'faruk hikmet', '2025-10-01', '2025-10-04', '2025-09-28 16:39:12', 'aktif');
+
 -- --------------------------------------------------------
 
 --
@@ -54,6 +61,13 @@ CREATE TABLE `egiticinin_egitimi_etkinlikleri` (
   `olusturulma_tarihi` timestamp NOT NULL DEFAULT current_timestamp(),
   `durum` enum('aktif','tamamlandi','iptal') DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Tablo döküm verisi `egiticinin_egitimi_etkinlikleri`
+--
+
+INSERT INTO `egiticinin_egitimi_etkinlikleri` (`id`, `coklu_beceri_id`, `egitmen_adi`, `gozetmen_adi`, `baslangic_tarihi`, `bitis_tarihi`, `kontenjan`, `olusturulma_tarihi`, `durum`) VALUES
+(1, 1, 'faruk hikmet', '', '2025-09-30', '2025-10-02', 1, '2025-09-28 21:52:11', 'aktif');
 
 -- --------------------------------------------------------
 
@@ -74,12 +88,7 @@ CREATE TABLE `organizations` (
 --
 
 INSERT INTO `organizations` (`id`, `name`, `column_position`, `created_at`, `updated_at`) VALUES
-(1, 'deneme1', 4, '2025-09-17 05:51:59', '2025-09-17 05:51:59'),
-(2, 'deneme2', 5, '2025-09-17 05:53:44', '2025-09-17 05:53:44'),
-(5, 'deneme3', 6, '2025-09-17 06:16:00', '2025-09-17 06:16:00'),
-(6, 'deneme4', 7, '2025-09-17 10:57:07', '2025-09-17 10:57:07'),
-(7, 'deneme5', 8, '2025-09-18 04:39:25', '2025-09-18 04:39:25'),
-(8, 'deneme6', 9, '2025-09-20 19:49:30', '2025-09-20 19:49:30');
+(1, 'deneme1', 4, '2025-09-17 05:51:59', '2025-09-28 21:29:29');
 
 -- --------------------------------------------------------
 
@@ -101,7 +110,7 @@ CREATE TABLE `organization_images` (
 --
 
 INSERT INTO `organization_images` (`id`, `organization_id`, `row_name`, `image_name`, `created_at`, `updated_at`) VALUES
-(1, 1, 'HAKAN KOR', 'pie (3).png', '2025-09-21 21:00:05', '2025-09-21 21:00:05'),
+(1, 1, 'HAKAN KOR', 'pie (5).png', '2025-09-21 21:00:05', '2025-09-28 19:12:05'),
 (2, 2, 'HAKAN KOR', 'pie (5).png', '2025-09-21 21:06:02', '2025-09-21 21:07:26');
 
 -- --------------------------------------------------------
@@ -124,12 +133,7 @@ CREATE TABLE `organization_skills` (
 --
 
 INSERT INTO `organization_skills` (`id`, `organization_id`, `skill_id`, `priority`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'medium', '2025-09-17 05:52:15', '2025-09-17 05:52:15'),
-(2, 2, 1, 'medium', '2025-09-17 05:53:52', '2025-09-17 05:53:52'),
-(4, 5, 3, 'medium', '2025-09-17 06:16:05', '2025-09-17 06:16:05'),
-(5, 6, 4, 'medium', '2025-09-17 10:57:17', '2025-09-17 10:57:17'),
-(6, 7, 2, 'medium', '2025-09-18 04:39:34', '2025-09-18 04:39:34'),
-(7, 8, 5, 'medium', '2025-09-20 19:49:40', '2025-09-20 19:49:40');
+(1, 1, 1, 'medium', '2025-09-17 05:52:15', '2025-09-17 05:52:15');
 
 -- --------------------------------------------------------
 
@@ -195,7 +199,7 @@ CREATE TABLE `planned_multi_skill` (
   `id` int(11) NOT NULL,
   `person_id` int(11) NOT NULL,
   `organization_id` int(11) NOT NULL,
-  `teacher_id` int(11) DEFAULT NULL,
+  `etkinlik_id` int(11) DEFAULT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `status` varchar(50) DEFAULT 'pending',
@@ -208,8 +212,8 @@ CREATE TABLE `planned_multi_skill` (
 -- Tablo döküm verisi `planned_multi_skill`
 --
 
-INSERT INTO `planned_multi_skill` (`id`, `person_id`, `organization_id`, `teacher_id`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`, `success_status`) VALUES
-(11, 1, 2, 3, '2025-09-21', '2025-09-21', 'pending', '2025-09-21 10:49:20', '2025-09-21 21:07:26', 'tamamlandi');
+INSERT INTO `planned_multi_skill` (`id`, `person_id`, `organization_id`, `etkinlik_id`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`, `success_status`) VALUES
+(12, 1, 1, NULL, '2025-09-28', '2025-09-28', 'pending', '2025-09-28 17:41:13', '2025-09-28 19:12:05', 'tamamlandi');
 
 -- --------------------------------------------------------
 
@@ -244,14 +248,58 @@ CREATE TABLE `planned_skills` (
 --
 
 INSERT INTO `planned_skills` (`id`, `person_id`, `organization_id`, `skill_id`, `company_name`, `title`, `registration_no`, `target_level`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`, `teacher_id`, `event_id`, `priority`, `notes`, `created_by`, `success_status`) VALUES
-(1, 1, 1, 1, NULL, NULL, NULL, 1, '2025-09-21', '2025-09-21', 'tamamlandi', '2025-09-17 06:04:51', '2025-09-21 10:16:32', 3, NULL, 'low', '', '1', 'completed'),
-(3, 2, 5, 4, NULL, NULL, NULL, 1, '2025-09-21', '2025-09-21', 'tamamlandi', '2025-09-17 06:16:47', '2025-09-21 10:32:00', 10, NULL, 'low', '', NULL, 'completed'),
-(4, 1, 5, 4, NULL, NULL, NULL, 1, '2025-09-21', '2025-09-21', 'tamamlandi', '2025-09-17 11:10:03', '2025-09-21 10:31:17', 10, NULL, 'low', '', NULL, 'completed'),
-(5, 1, 6, 5, NULL, NULL, NULL, 3, NULL, NULL, 'istek_gonderildi', '2025-09-17 11:12:20', '2025-09-17 11:12:20', NULL, NULL, 'medium', NULL, NULL, 'pending'),
-(6, 2, 6, 5, NULL, NULL, NULL, 3, NULL, NULL, 'istek_gonderildi', '2025-09-18 12:01:38', '2025-09-18 12:01:38', NULL, NULL, 'medium', NULL, NULL, 'pending'),
-(7, 2, 8, 7, NULL, NULL, NULL, 3, NULL, NULL, 'istek_gonderildi', '2025-09-20 19:49:51', '2025-09-20 19:49:51', NULL, NULL, 'medium', NULL, NULL, 'pending'),
-(8, 1, 2, 2, NULL, NULL, NULL, 1, '2025-09-21', '2025-09-21', 'tamamlandi', '2025-09-18 05:45:49', '2025-09-21 10:16:32', 9, NULL, 'low', '', NULL, 'completed'),
-(9, 2, 7, 6, NULL, NULL, NULL, 3, NULL, NULL, 'istek_gonderildi', '2025-09-21 08:18:43', '2025-09-21 08:18:43', NULL, NULL, 'medium', NULL, NULL, '');
+(10, 1, 1, 1, 'ASELSAN', 'PERSONEL', '504657', 1, '2025-09-28', '2025-09-28', 'tamamlandi', '2025-09-28 17:12:28', '2025-09-28 17:40:55', 11, NULL, 'low', '', NULL, 'completed');
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `planned_training_trainer`
+--
+
+CREATE TABLE `planned_training_trainer` (
+  `id` int(11) NOT NULL,
+  `person_id` int(11) NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  `etkinlik_id` int(11) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `status` varchar(50) DEFAULT 'planlandi',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `success_status` varchar(50) DEFAULT 'beklemede',
+  `description` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Tablo döküm verisi `planned_training_trainer`
+--
+
+INSERT INTO `planned_training_trainer` (`id`, `person_id`, `organization_id`, `etkinlik_id`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`, `success_status`, `description`) VALUES
+(2, 1, 1, 1, '2025-09-28', '2025-10-05', 'planlandi', '2025-09-28 21:44:26', '2025-09-28 22:03:55', 'başarılı', 'Eğiticinin eğitimi isteği');
+
+--
+-- Tetikleyiciler `planned_training_trainer`
+--
+DELIMITER $$
+CREATE TRIGGER `after_planned_training_trainer_update` AFTER UPDATE ON `planned_training_trainer` FOR EACH ROW BEGIN
+    IF NEW.success_status = 'başarılı' AND (OLD.success_status IS NULL OR OLD.success_status != 'başarılı') THEN
+        INSERT IGNORE INTO successful_trainers (
+            person_id, 
+            organization_id, 
+            etkinlik_id, 
+            start_date, 
+            end_date
+        ) VALUES (
+            NEW.person_id,
+            NEW.organization_id,
+            NEW.etkinlik_id,
+            NEW.start_date,
+            NEW.end_date
+        );
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -283,6 +331,32 @@ INSERT INTO `skills` (`id`, `skill_name`, `skill_description`, `category`, `is_a
 -- --------------------------------------------------------
 
 --
+-- Tablo için tablo yapısı `successful_trainers`
+--
+
+CREATE TABLE `successful_trainers` (
+  `id` int(11) NOT NULL,
+  `person_id` int(11) NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  `etkinlik_id` int(11) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `success_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Tablo döküm verisi `successful_trainers`
+--
+
+INSERT INTO `successful_trainers` (`id`, `person_id`, `organization_id`, `etkinlik_id`, `start_date`, `end_date`, `success_date`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, '2025-09-28', '2025-10-05', '2025-09-28 22:03:55', '2025-09-28 22:03:55', '2025-09-28 22:03:55'),
+(2, 2, 1, 1, '2025-10-01', '2025-10-03', '2025-09-28 22:10:15', '2025-09-28 22:10:15', '2025-09-28 22:10:15');
+
+-- --------------------------------------------------------
+
+--
 -- Tablo için tablo yapısı `teachers`
 --
 
@@ -308,7 +382,8 @@ INSERT INTO `teachers` (`id`, `first_name`, `last_name`, `specialization`, `crea
 (7, 'SABRİ', 'GÜNVER', 'KONTROL', '2025-09-18 12:02:10', '2025-09-18 12:02:10'),
 (8, 'ŞÜKRÜ', 'SARAÇOĞLU', 'FUTBOL', '2025-09-18 12:03:04', '2025-09-18 12:03:04'),
 (9, 'ALİ SAMİ', 'YEN', 'Futbol', '2025-09-18 12:03:41', '2025-09-18 12:03:41'),
-(10, 'yiğit', 'tabaklı', 'yazılım', '2025-09-21 08:04:48', '2025-09-21 08:04:48');
+(10, 'yiğit', 'tabaklı', 'yazılım', '2025-09-21 08:04:48', '2025-09-21 08:04:48'),
+(11, 'faruk', 'hikmet', 'yazılım geliştirme', '2025-09-28 16:31:04', '2025-09-28 16:31:04');
 
 -- --------------------------------------------------------
 
@@ -327,6 +402,13 @@ CREATE TABLE `temel_beceri_etkinlikleri` (
   `olusturulma_tarihi` timestamp NOT NULL DEFAULT current_timestamp(),
   `durum` enum('aktif','tamamlandi','iptal') DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Tablo döküm verisi `temel_beceri_etkinlikleri`
+--
+
+INSERT INTO `temel_beceri_etkinlikleri` (`id`, `coklu_beceri_id`, `temel_beceri_adi`, `egitmen_adi`, `baslangic_tarihi`, `bitis_tarihi`, `kontenjan`, `olusturulma_tarihi`, `durum`) VALUES
+(1, 1, 'DERS2', 'faruk hikmet', '2025-09-29', '2025-10-01', 1, '2025-09-28 16:37:47', 'aktif');
 
 -- --------------------------------------------------------
 
@@ -359,25 +441,8 @@ INSERT INTO `tep_teachers` (`id`, `person_name`, `organization_name`, `skill_nam
 (10, 'ŞÜKRÜ SARAÇOĞLU', 'deneme5', 'DERS3', '2025-09-18 12:03:04', '2025-09-18 12:03:04'),
 (11, 'ALİ SAMİ YEN', 'deneme4', 'DERS4', '2025-09-18 12:03:41', '2025-09-18 12:03:41'),
 (12, 'ALİ SAMİ YEN', 'deneme4', 'MURAT', '2025-09-18 12:03:41', '2025-09-18 12:03:41'),
-(13, 'yiğit tabaklı', 'deneme3', 'DERS4', '2025-09-21 08:04:48', '2025-09-21 08:04:48');
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `trainer_training_status`
---
-
-CREATE TABLE `trainer_training_status` (
-  `id` int(11) NOT NULL,
-  `planned_multi_skill_id` int(11) NOT NULL,
-  `person_id` int(11) NOT NULL,
-  `organization_id` int(11) NOT NULL,
-  `training_status` enum('tamamlanmadı','tamamlandı') DEFAULT 'tamamlanmadı',
-  `completion_date` date DEFAULT NULL,
-  `notes` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(13, 'yiğit tabaklı', 'deneme3', 'DERS4', '2025-09-21 08:04:48', '2025-09-21 08:04:48'),
+(14, 'faruk hikmet', 'deneme1', 'DERS2', '2025-09-28 16:31:04', '2025-09-28 16:31:04');
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -453,7 +518,8 @@ ALTER TABLE `person_organization_images`
 --
 ALTER TABLE `planned_multi_skill`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_person_org` (`person_id`,`organization_id`);
+  ADD UNIQUE KEY `unique_person_org` (`person_id`,`organization_id`),
+  ADD KEY `fk_planned_multi_skill_etkinlik` (`etkinlik_id`);
 
 --
 -- Tablo için indeksler `planned_skills`
@@ -468,6 +534,17 @@ ALTER TABLE `planned_skills`
   ADD KEY `idx_planned_skills_dates` (`start_date`,`end_date`);
 
 --
+-- Tablo için indeksler `planned_training_trainer`
+--
+ALTER TABLE `planned_training_trainer`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_person_id` (`person_id`),
+  ADD KEY `idx_organization_id` (`organization_id`),
+  ADD KEY `idx_etkinlik_id` (`etkinlik_id`),
+  ADD KEY `idx_status` (`status`),
+  ADD KEY `idx_created_at` (`created_at`);
+
+--
 -- Tablo için indeksler `skills`
 --
 ALTER TABLE `skills`
@@ -476,6 +553,13 @@ ALTER TABLE `skills`
   ADD KEY `idx_skill_name` (`skill_name`),
   ADD KEY `idx_category` (`category`),
   ADD KEY `idx_is_active` (`is_active`);
+
+--
+-- Tablo için indeksler `successful_trainers`
+--
+ALTER TABLE `successful_trainers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_person_etkinlik` (`person_id`,`etkinlik_id`);
 
 --
 -- Tablo için indeksler `teachers`
@@ -503,16 +587,6 @@ ALTER TABLE `tep_teachers`
   ADD KEY `idx_skill_name` (`skill_name`);
 
 --
--- Tablo için indeksler `trainer_training_status`
---
-ALTER TABLE `trainer_training_status`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_multi_skill` (`planned_multi_skill_id`),
-  ADD KEY `idx_person_id` (`person_id`),
-  ADD KEY `idx_organization_id` (`organization_id`),
-  ADD KEY `idx_training_status` (`training_status`);
-
---
 -- Dökümü yapılmış tablolar için AUTO_INCREMENT değeri
 --
 
@@ -520,13 +594,13 @@ ALTER TABLE `trainer_training_status`
 -- Tablo için AUTO_INCREMENT değeri `coklu_beceri_etkinlikleri`
 --
 ALTER TABLE `coklu_beceri_etkinlikleri`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `egiticinin_egitimi_etkinlikleri`
 --
 ALTER TABLE `egiticinin_egitimi_etkinlikleri`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `organizations`
@@ -562,13 +636,19 @@ ALTER TABLE `person_organization_images`
 -- Tablo için AUTO_INCREMENT değeri `planned_multi_skill`
 --
 ALTER TABLE `planned_multi_skill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `planned_skills`
 --
 ALTER TABLE `planned_skills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- Tablo için AUTO_INCREMENT değeri `planned_training_trainer`
+--
+ALTER TABLE `planned_training_trainer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `skills`
@@ -577,28 +657,28 @@ ALTER TABLE `skills`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- Tablo için AUTO_INCREMENT değeri `successful_trainers`
+--
+ALTER TABLE `successful_trainers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- Tablo için AUTO_INCREMENT değeri `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `temel_beceri_etkinlikleri`
 --
 ALTER TABLE `temel_beceri_etkinlikleri`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `tep_teachers`
 --
 ALTER TABLE `tep_teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- Tablo için AUTO_INCREMENT değeri `trainer_training_status`
---
-ALTER TABLE `trainer_training_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Dökümü yapılmış tablolar için kısıtlamalar
@@ -619,20 +699,18 @@ ALTER TABLE `person_organization_images`
   ADD CONSTRAINT `person_organization_images_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE;
 
 --
+-- Tablo kısıtlamaları `planned_multi_skill`
+--
+ALTER TABLE `planned_multi_skill`
+  ADD CONSTRAINT `fk_planned_multi_skill_etkinlik` FOREIGN KEY (`etkinlik_id`) REFERENCES `coklu_beceri_etkinlikleri` (`id`);
+
+--
 -- Tablo kısıtlamaları `planned_skills`
 --
 ALTER TABLE `planned_skills`
   ADD CONSTRAINT `planned_skills_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `persons` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `planned_skills_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `planned_skills_ibfk_3` FOREIGN KEY (`skill_id`) REFERENCES `organization_skills` (`id`) ON DELETE CASCADE;
-
---
--- Tablo kısıtlamaları `trainer_training_status`
---
-ALTER TABLE `trainer_training_status`
-  ADD CONSTRAINT `trainer_training_ibfk_1` FOREIGN KEY (`planned_multi_skill_id`) REFERENCES `planned_multi_skill` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `trainer_training_ibfk_2` FOREIGN KEY (`person_id`) REFERENCES `persons` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `trainer_training_ibfk_3` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
